@@ -1,33 +1,105 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
+import 'package:study_app/configs/app_colors.dart';
+import 'package:study_app/configs/app_icons.dart';
 import 'package:study_app/configs/app_images.dart';
+import 'package:study_app/configs/themes/app_text_style.dart';
+import 'package:study_app/configs/themes/ui_parameters.dart';
 import 'package:study_app/controllers/question_papers/question_paper_controller.dart';
+import 'package:study_app/controllers/zoom_drawer_controller.dart';
+import 'package:study_app/screens/home/menu_screeen.dart';
+import 'package:study_app/screens/home/question_card.dart';
+import 'package:study_app/widgets/circle_button.dart';
+
+import '../../widgets/content_area.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    QuestionPaperController _questionpapercontroller = Get.find();
+    QuestionPaperController questionPaperController = Get.find();
+    MyZoomDrawerController zoomDrawerController = Get.find();
     return Scaffold(
-      body: Obx(
-        () => ListView.separated(
-            itemBuilder: (context, index) {
-              return ClipRRect(
-                child: SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: FadeInImage(
-                    placeholder: const AssetImage(AppImages.splashLogo),
-                    image: NetworkImage(_questionpapercontroller.paperImages[index]),
+      body: ZoomDrawer(
+        controller: zoomDrawerController.zoomDrawerController,
+        borderRadius: 50.0,
+        showShadow: false,
+        angle: 0.0,
+        style: DrawerStyle.defaultStyle,
+        moveMenuScreen: false,
+        menuBackgroundColor: Colors.white.withOpacity(0.5),
+        menuScreenWidth: Get.width,
+        slideWidth: Get.width * 0.5,
+        menuScreen: MenuScreen(),
+        mainScreen: Container(
+          decoration: BoxDecoration(gradient: AppColors.mainGradient()),
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(appScreenPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          AppIcons.menuLeft,
+                        ),
+                        onPressed: zoomDrawerController.toggleDrawer,
+                        padding: EdgeInsets.all(0.0),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        child: Row(
+                          children: [
+                            const Icon(AppIcons.peace),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Hello friend',
+                              style: cardDetails.copyWith(color: AppColors.onSurfaceTextColor),
+                            )
+                          ],
+                        ),
+                      ),
+                      Text(
+                        'What do you want to learn today?',
+                        style: headerText,
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 20);
-            },
-            itemCount: _questionpapercontroller.paperImages.length),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: ContentArea(
+                      addPadding: false,
+                      child: Obx(
+                        () => ListView.separated(
+                            padding: UIParameters.appScreenPadding,
+                            itemBuilder: (context, index) {
+                              return QuestionCard(model: questionPaperController.allPapers[index]);
+                            },
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(height: 20);
+                            },
+                            itemCount: questionPaperController.allPapers.length),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

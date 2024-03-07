@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        decoration: BoxDecoration(gradient: AppColors.mainGradient(context)),
+        decoration: BoxDecoration(gradient: AppColors.mainGradient()),
         child: Image.asset(
           AppImages.splashLogo,
           width: 200,

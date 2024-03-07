@@ -40,6 +40,10 @@ dependencies:
   cloud_firestore: ^4.12.2
   google_fonts: ^6.1.0
   firebase_storage: ^11.4.1
+  cached_network_image: ^3.3.0
+  flutter_zoom_drawer: ^3.1.1
+  url_launcher: ^6.2.2
+  firebase_auth: ^4.15.3
 
 dev_dependencies:
   flutter_test:
@@ -63,11 +67,11 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-    # To add assets to your application, add an assets section, like this:
+  # To add assets to your application, add an assets section, like this:
   assets:
-      - assets/images/
-      - assets/icons/
-      - assets/DB/papers/
+    - assets/images/
+    - assets/icons/
+    - assets/DB/papers/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -80,6 +84,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: AppIcons
+      fonts:
+        - asset: assets/icons/AppIcons.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
