@@ -25,14 +25,13 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: ZoomDrawer(
         controller: zoomDrawerController.zoomDrawerController,
-        borderRadius: 50.0,
         showShadow: false,
         angle: 0.0,
         style: DrawerStyle.defaultStyle,
         moveMenuScreen: false,
         menuBackgroundColor: Colors.white.withOpacity(0.5),
-        menuScreenWidth: Get.width,
-        slideWidth: Get.width * 0.5,
+        menuScreenWidth: double.maxFinite,
+        slideWidth: MediaQuery.of(context).size.width * 0.6,
         menuScreen: MenuScreen(),
         mainScreen: Container(
           decoration: BoxDecoration(gradient: AppColors.mainGradient()),
@@ -46,17 +45,18 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: BoxConstraints(),
                         icon: const Icon(
                           AppIcons.menuLeft,
                         ),
                         onPressed: zoomDrawerController.toggleDrawer,
-                        padding: EdgeInsets.all(0.0),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 0,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Row(
                           children: [
                             const Icon(AppIcons.peace),
@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                       addPadding: false,
                       child: Obx(
                         () => ListView.separated(
-                            padding: UIParameters.appScreenPadding,
+                            padding: const EdgeInsets.all(20),
                             itemBuilder: (context, index) {
                               return QuestionCard(model: questionPaperController.allPapers[index]);
                             },

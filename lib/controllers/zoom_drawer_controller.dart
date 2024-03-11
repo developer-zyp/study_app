@@ -1,5 +1,6 @@
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyZoomDrawerController extends GetxController {
   final zoomDrawerController = ZoomDrawerController();
@@ -9,20 +10,20 @@ class MyZoomDrawerController extends GetxController {
     update();
   }
 
-  void signIn(){
+  void signIn() {}
 
+  void signOut() {}
+
+  void goToWebsite() {}
+
+  void goToEmail() {
+    final Uri emailLaunchUri = Uri(scheme: 'mailto', path: 'mypc.zyp@gmail.com');
+    _launch(emailLaunchUri);
   }
 
-  void signOut(){
-
-  }
-
-  void goToWebsite(){
-
-  }
-
-  void goToEmail(){
-    final emailUri = Uri(scheme: 'mailto',path: 'mypc.zyp@gmail.com');
-
+  Future<void> _launch(Uri emailLaunchUri) async {
+    if (await canLaunchUrl(emailLaunchUri)) {
+      throw 'could not launch ${emailLaunchUri}';
+    }
   }
 }
