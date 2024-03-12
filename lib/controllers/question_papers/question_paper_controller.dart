@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:study_app/controllers/auth_controller.dart';
 import 'package:study_app/firebase_ref/references.dart';
 import 'package:study_app/models/question_paper.dart';
 import 'package:study_app/services/firebase_storage_service.dart';
@@ -18,9 +19,7 @@ class QuestionPaperController extends GetxController {
     List<String> imgNames = ["biology", "chemistry", "maths", "physics"];
     try {
       QuerySnapshot<Map<String, dynamic>> data = await questionPaperRF.get();
-      final paperList = data.docs
-          .map((e) => QuestionPaperModel.fromSnapshot(e))
-          .toList();
+      final paperList = data.docs.map((e) => QuestionPaperModel.fromSnapshot(e)).toList();
       // allPapers.addAll(paperList);
 
       for (var paper in paperList) {
@@ -31,6 +30,19 @@ class QuestionPaperController extends GetxController {
       allPapers.addAll(paperList);
     } catch (e) {
       print('Unknown exception: $e');
+    }
+  }
+
+  void navigateToQuestions({required QuestionPaperModel paperModel, bool tryAgain = false}) {
+    AuthController authController = Get.find();
+    if (authController.isLoggedIn()) {
+      if (tryAgain) {
+        Get.back();
+      } else {
+
+      }
+    } else {
+      authController.showLoginAlertDialog();
     }
   }
 }

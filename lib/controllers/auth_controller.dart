@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:study_app/firebase_ref/references.dart';
 import 'package:study_app/routes/route_names.dart';
+import 'package:study_app/screens/login/login_screen.dart';
 import 'package:study_app/utils/app_logger.dart';
+
+import '../widgets/dialogs/dialog_widget.dart';
 
 class AuthController extends GetxController {
   @override
@@ -48,11 +51,29 @@ class AuthController extends GetxController {
     Get.offNamed(RouteNames.introScreen);
   }
 
+  void showLoginAlertDialog() {
+    Get.dialog(
+      Dialogs.questionStartDialog(onTap: () {
+        Get.back();
+        navigateToLoginScreen();
+      }),
+      barrierDismissible: false,
+    );
+  }
+
+  bool isLoggedIn() {
+    return _firebaseAuth.currentUser != null;
+  }
+
   saveUser(GoogleSignInAccount account) {
     userRF.doc(account.email).set({
       "email": account.email,
       "name": account.displayName,
       "profilepic": account.photoUrl,
     });
+  }
+
+  void navigateToLoginScreen() {
+    Get.toNamed(RouteNames.loginScreen);
   }
 }

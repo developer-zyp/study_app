@@ -3,6 +3,7 @@ import 'package:study_app/controllers/question_papers/question_paper_controller.
 import 'package:study_app/routes/route_names.dart';
 import 'package:study_app/screens/home/home_screen.dart';
 import 'package:study_app/screens/intro/intro_screen.dart';
+import 'package:study_app/screens/login/login_screen.dart';
 import 'package:study_app/screens/splash/splash_screen.dart';
 
 import '../controllers/zoom_drawer_controller.dart';
@@ -20,5 +21,6 @@ class AppRoutes {
           Get.put(QuestionPaperController());
           Get.put(MyZoomDrawerController());
         })),
+    GetPage(name: RouteNames.loginScreen, page: () => LoginScreen()),
   ];
 }
