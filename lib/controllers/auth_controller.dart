@@ -47,6 +47,15 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> signOut() async {
+    AppLogger.d('Sign out!');
+    try {
+      await _firebaseAuth.signOut();
+    } on FirebaseAuthException catch (e) {
+      AppLogger.e(e);
+    }
+  }
+
   void navigateToIntroScreen() {
     Get.offNamed(RouteNames.introScreen);
   }
@@ -75,5 +84,10 @@ class AuthController extends GetxController {
 
   void navigateToLoginScreen() {
     Get.toNamed(RouteNames.loginScreen);
+  }
+
+  User? getUser() {
+    _user.value = _firebaseAuth.currentUser;
+    return _user.value;
   }
 }
