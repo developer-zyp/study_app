@@ -25,14 +25,16 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: ZoomDrawer(
         controller: zoomDrawerController.zoomDrawerController,
-        showShadow: false,
         angle: 0.0,
         style: DrawerStyle.defaultStyle,
+        showShadow: false,
+        clipMainScreen: false,
         moveMenuScreen: false,
+        menuScreenWidth: MediaQuery.of(context).size.width,
         menuBackgroundColor: Colors.white.withOpacity(0.5),
-        menuScreenWidth: double.maxFinite,
-        slideWidth: MediaQuery.of(context).size.width * 0.6,
-        menuScreen: MenuScreen(),
+        menuScreen: const MenuScreen(),
+        slideWidth: Get.width * 0.6,
+        mainScreenTapClose: true,
         mainScreen: Container(
           decoration: BoxDecoration(gradient: AppColors.mainGradient()),
           child: SafeArea(
@@ -45,15 +47,14 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: BoxConstraints(),
+                        constraints: const BoxConstraints(),
                         icon: const Icon(
                           AppIcons.menuLeft,
                         ),
                         onPressed: zoomDrawerController.toggleDrawer,
                       ),
                       const SizedBox(
-                        height: 0,
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),

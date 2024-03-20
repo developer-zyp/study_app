@@ -12,7 +12,7 @@ class MenuScreen extends GetView<MyZoomDrawerController> {
     return Container(
       padding: UIParameters.appScreenPadding,
       width: double.infinity,
-      decoration: BoxDecoration(gradient: AppColors.mainGradientLight),
+      decoration: const BoxDecoration(gradient: AppColors.mainGradientLight),
       child: Theme(
         data: ThemeData(
             textButtonTheme: TextButtonThemeData(
@@ -30,10 +30,20 @@ class MenuScreen extends GetView<MyZoomDrawerController> {
                     },
                   )),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Obx(
                     () => controller.user.value == null
-                        ? const SizedBox()
+                        ? const SizedBox(
+                            child: Text(
+                              "Login User",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18,
+                                color: AppColors.onSurfaceTextColor,
+                              ),
+                            ),
+                          )
                         : Text(
                             controller.user.value?.displayName ?? "Login User",
                             style: const TextStyle(
@@ -43,9 +53,11 @@ class MenuScreen extends GetView<MyZoomDrawerController> {
                             ),
                           ),
                   ),
+                  const Spacer(flex: 1),
                   _DrawerButton(iconData: Icons.web, label: "Website", onTap: controller.goToWebsite),
                   _DrawerButton(iconData: Icons.email, label: "Email", onTap: controller.goToEmail),
                   _DrawerButton(iconData: Icons.facebook, label: "Facebook", onTap: controller.goToWebsite),
+                  const Spacer(flex: 9),
                   _DrawerButton(iconData: Icons.logout, label: "Logout", onTap: controller.signOut),
                 ],
               ),

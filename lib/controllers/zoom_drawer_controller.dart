@@ -37,6 +37,9 @@ class MyZoomDrawerController extends GetxController {
 
   Future<void> _launch(Uri emailLaunchUri) async {
     if (await canLaunchUrl(emailLaunchUri)) {
+      AppLogger.i('launching $emailLaunchUri');
+      await launchUrl(emailLaunchUri);
+    } else {
       throw 'could not launch ${emailLaunchUri}';
     }
   }

@@ -41,6 +41,7 @@ class AuthController extends GetxController {
 
         await _firebaseAuth.signInWithCredential(credential);
         await saveUser(account);
+        navigateToHomeScreen();
       }
     } on Exception catch (error) {
       AppLogger.e(error);
@@ -51,6 +52,7 @@ class AuthController extends GetxController {
     AppLogger.d('Sign out!');
     try {
       await _firebaseAuth.signOut();
+      navigateToHomeScreen();
     } on FirebaseAuthException catch (e) {
       AppLogger.e(e);
     }
@@ -84,6 +86,10 @@ class AuthController extends GetxController {
 
   void navigateToLoginScreen() {
     Get.toNamed(RouteNames.loginScreen);
+  }
+
+  void navigateToHomeScreen() {
+    Get.offAllNamed(RouteNames.homeScreen);
   }
 
   User? getUser() {
